@@ -1,19 +1,19 @@
-<div>
-  <div class="row justify-content-center">
+<div style="padding-top: 4em">
+  <div class="row justify-content-center altura-maxima">
     <div class="col-lg-6 col-md-8 col-sm-10">
-      <h1 data-cy="loginTitle">Sign in</h1>
+      <h1 data-cy="loginTitle">Identificarse</h1>
       <div class="alert alert-danger" *ngIf="authenticationError" data-cy="loginError">
-        <strong>Failed to sign in!</strong> Please check your credentials and try again.
+        <strong>No autenticado!</strong> Por favor verifique sus datos e intente nuevamente.
       </div>
       <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
         <div class="form-group">
-          <label class="username-label" for="username">Login</label>
+          <label class="username-label" for="username">Usuario</label>
           <input
             type="text"
             class="form-control"
             name="username"
             id="username"
-            placeholder="Your username"
+            placeholder="Usuario del directorio activo"
             formControlName="username"
             #username
             data-cy="username"
@@ -21,13 +21,13 @@
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Contrase&ntilde;a</label>
           <input
             type="password"
             class="form-control"
             name="password"
             id="password"
-            placeholder="Your password"
+            placeholder="Su clave"
             formControlName="password"
             data-cy="password"
           />
@@ -36,11 +36,11 @@
         <div class="form-check">
           <label class="form-check-label" for="rememberMe">
             <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe" />
-            <span>Remember me</span>
+            <span>Recordarme</span>
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary" data-cy="submit">Sign in</button>
+        <button type="submit" class="btn btn-primary" data-cy="submit">Entrar</button>
       </form>
     </div>
   </div>

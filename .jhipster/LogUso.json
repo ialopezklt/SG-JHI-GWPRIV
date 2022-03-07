@@ -1,0 +1,58 @@
+{
+  "applications": "*",
+  "changelogDate": "20220303235624",
+  "databaseType": "no",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "log_uso",
+  "fields": [
+    {
+      "fieldName": "logUsoId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "usuario",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "opcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaHora",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "tipoDocumento",
+      "fieldType": "TipoDocumento",
+      "fieldValues": "CedulaCiudadania (CC),CedulaExtranjeria (CE),Pasaporte (PA)"
+    },
+    {
+      "fieldName": "numeroDocumento",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "clienteSospechoso",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datosAnteriores",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "LogUso",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

@@ -1,0 +1,41 @@
+{
+  "applications": "*",
+  "changelogDate": "20220303235622",
+  "databaseType": "no",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "rol",
+  "fields": [
+    {
+      "fieldName": "rolId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Rol",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "usuario",
+      "otherEntityRelationshipName": "rol",
+      "ownerSide": true,
+      "relationshipName": "usuario",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,285 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-usuario-heading" data-cy="UsuarioCreateUpdateHeading">Crear o editar Usuario</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('usuarioId')!.value == null">
+          <label class="form-control-label" for="field_usuarioId">Usuario Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="usuarioId"
+            id="field_usuarioId"
+            data-cy="usuarioId"
+            formControlName="usuarioId"
+            [readonly]="true"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_tipoUsuario">Tipo Usuario</label>
+          <select
+            class="form-control"
+            name="tipoUsuario"
+            formControlName="tipoUsuario"
+            id="field_tipoUsuario"
+            data-cy="tipoUsuario"
+            [disabled]="true"
+          >
+            <option value="Interno" selected>Interno</option>
+            <!-- option *ngFor="let tipoUsuario of tipoUsuarioValues" [value]="tipoUsuario">tipoUsuario</option-->
+          </select>
+          <div *ngIf="editForm.get('tipoUsuario')!.invalid && (editForm.get('tipoUsuario')!.dirty || editForm.get('tipoUsuario')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('tipoUsuario')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_username">Usuario Directorio</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          <div *ngIf="editForm.get('username')!.invalid && (editForm.get('username')!.dirty || editForm.get('username')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('username')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('username')?.errors?.minlength"> Mínimo 5 caracteres. </small>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="false">
+          <label class="form-control-label" for="field_clave">Clave</label>
+          <input type="text" class="form-control" name="clave" id="field_clave" data-cy="clave" formControlName="clave" />
+          <div *ngIf="editForm.get('clave')!.invalid && (editForm.get('clave')!.dirty || editForm.get('clave')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('clave')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('clave')?.errors?.minlength"> Mínimo 5 caracteres. </small>
+          </div>
+        </div>
+
+        <div class="checkbox switcher">
+          <label for="test3">
+            <input type="checkbox" id="test3" value="" />
+            <span><small></small></span>
+            <small>Brain</small>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_activo">Activo</label>
+          <input type="text" class="form-control" name="activo" id="field_activo" data-cy="activo" formControlName="activo" />
+          <div *ngIf="editForm.get('activo')!.invalid && (editForm.get('activo')!.dirty || editForm.get('activo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('activo')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_correo">Correo</label>
+          <input type="text" class="form-control" name="correo" id="field_correo" data-cy="correo" formControlName="correo" />
+          <div *ngIf="editForm.get('correo')!.invalid && (editForm.get('correo')!.dirty || editForm.get('correo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('correo')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('correo')?.errors?.minlength">
+              This field is required to be at least 6 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_celular">Celular</label>
+          <input type="number" class="form-control" name="celular" id="field_celular" data-cy="celular" formControlName="celular" />
+          <div *ngIf="editForm.get('celular')!.invalid && (editForm.get('celular')!.dirty || editForm.get('celular')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('celular')?.errors?.min">
+              This field should be at least 3000000000.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('celular')?.errors?.max">
+              This field cannot be more than 3900000000.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('celular')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_tipoDocumento">Tipo Documento</label>
+          <select
+            class="form-control"
+            name="tipoDocumento"
+            formControlName="tipoDocumento"
+            id="field_tipoDocumento"
+            data-cy="tipoDocumento"
+          >
+            <option [ngValue]="null"></option>
+            <option *ngFor="let tipoDocumento of tipoDocumentoValues" [value]="tipoDocumento.key" se>{{ tipoDocumento.value }}</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('tipoDocumento')!.invalid && (editForm.get('tipoDocumento')!.dirty || editForm.get('tipoDocumento')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('tipoDocumento')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numeroDocumento">Número Documento</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroDocumento"
+            id="field_numeroDocumento"
+            data-cy="numeroDocumento"
+            formControlName="numeroDocumento"
+          />
+          <div
+            *ngIf="
+              editForm.get('numeroDocumento')!.invalid &&
+              (editForm.get('numeroDocumento')!.dirty || editForm.get('numeroDocumento')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('numeroDocumento')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_primerNombre">Primer Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="primerNombre"
+            id="field_primerNombre"
+            data-cy="primerNombre"
+            formControlName="primerNombre"
+          />
+          <div
+            *ngIf="editForm.get('primerNombre')!.invalid && (editForm.get('primerNombre')!.dirty || editForm.get('primerNombre')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('primerNombre')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_segundoNombre">Segundo Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="segundoNombre"
+            id="field_segundoNombre"
+            data-cy="segundoNombre"
+            formControlName="segundoNombre"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_primerApellido">Primer Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            name="primerApellido"
+            id="field_primerApellido"
+            data-cy="primerApellido"
+            formControlName="primerApellido"
+          />
+          <div
+            *ngIf="
+              editForm.get('primerApellido')!.invalid && (editForm.get('primerApellido')!.dirty || editForm.get('primerApellido')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('primerApellido')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_segundoApellido">Segundo Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            name="segundoApellido"
+            id="field_segundoApellido"
+            data-cy="segundoApellido"
+            formControlName="segundoApellido"
+          />
+        </div>
+
+        <div class="form-group" *ngIf="false">
+          <label class="form-control-label" for="field_ultimoIngreso">Último Ingreso</label>
+          <div class="d-flex">
+            <input
+              id="field_ultimoIngreso"
+              data-cy="ultimoIngreso"
+              type="datetime-local"
+              class="form-control"
+              name="ultimoIngreso"
+              formControlName="ultimoIngreso"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_inicioInactivacion">Inicio Inactivación</label>
+          <div class="d-flex">
+            <input
+              id="field_inicioInactivacion"
+              data-cy="inicioInactivacion"
+              type="datetime-local"
+              class="form-control"
+              name="inicioInactivacion"
+              formControlName="inicioInactivacion"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_finInactivacion">Fin Inactivación</label>
+          <div class="d-flex">
+            <input
+              id="field_finInactivacion"
+              data-cy="finInactivacion"
+              type="datetime-local"
+              class="form-control"
+              name="finInactivacion"
+              formControlName="finInactivacion"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_fechaCreacion">Fecha Creación</label>
+          <div class="d-flex">
+            <input
+              id="field_fechaCreacion"
+              data-cy="fechaCreacion"
+              type="datetime-local"
+              class="form-control"
+              name="fechaCreacion"
+              formControlName="fechaCreacion"
+              placeholder="YYYY-MM-DD"
+              [disabled]="true"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_creadoPor">Creado Por</label>
+          <input type="text" class="form-control" name="creadoPor" id="field_creadoPor" data-cy="creadoPor" formControlName="creadoPor" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

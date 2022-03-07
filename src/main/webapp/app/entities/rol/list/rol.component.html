@@ -1,0 +1,83 @@
+<div>
+  <h2 id="page-heading" data-cy="RolHeading">
+    <span>Roles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Recargar Lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-rol"
+        [routerLink]="['/rol/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Creaar nuevo Rol </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="rols?.length === 0">
+    <span>No roles found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="rols && rols.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Rol Id</span></th>
+          <th scope="col"><span>Nombre</span></th>
+          <th scope="col"><span>Activo</span></th>
+          <th scope="col"><span>Usuarios en rol</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of rols; trackBy: trackRolId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/rol', rol.rolId, 'view']">{{ rol.rolId }}</a>
+          </td>
+          <td>{{ rol.nombre }}</td>
+          <td>{{ rol.activo }}</td>
+          <td>
+            <span *ngFor="let usuario of rol.usuarios; let last = last">
+              <a class="form-control-static" [routerLink]="['/usuario', usuario.usuarioId, 'view']">{{ usuario.usuarioId }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/rol', rol.rolId, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Ver</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/rol', rol.rolId, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Editar</span>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(rol)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+                [disabled]="rol.rolId === 1 || rol.rolId === 2 || rol.rolId === 3 || rol.rolId === 4"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Borrar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

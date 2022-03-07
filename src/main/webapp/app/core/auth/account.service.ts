@@ -22,6 +22,8 @@ export class AccountService {
   ) {}
 
   authenticate(identity: Account | null): void {
+    console.log('en authenticate:');
+    console.log(identity);
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);
     if (!identity) {
@@ -30,6 +32,10 @@ export class AccountService {
   }
 
   hasAnyAuthority(authorities: string[] | string): boolean {
+    console.log('autorities:');
+    console.log(authorities);
+    console.log('userIdentity;');
+    console.log(this.userIdentity);
     if (!this.userIdentity) {
       return false;
     }
@@ -54,6 +60,8 @@ export class AccountService {
   }
 
   isAuthenticated(): boolean {
+    console.log('en isauthe...');
+    console.log(this, this.userIdentity);
     return this.userIdentity !== null;
   }
 
@@ -62,7 +70,7 @@ export class AccountService {
   }
 
   private fetch(): Observable<Account> {
-    return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account'));
+    return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account', 'backrastreogiros'));
   }
 
   private navigateToStoredUrl(): void {

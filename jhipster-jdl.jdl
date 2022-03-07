@@ -1,0 +1,65 @@
+enum TipoUsuario {
+Interno(I)
+,Externo(E)
+,Dual(D)
+}
+enum TipoDocumento {
+CedulaCiudadania(CC)
+,CedulaExtranjeria(CE)
+,Pasaporte(PA)
+}
+entity Rol {
+@Id rolId Long
+,nombre String required
+,activo String
+}
+entity Usuario {
+@Id usuarioId Long
+,tipoUsuario TipoUsuario required
+,username String required minlength(5) 
+,clave String required minlength(5)
+,activo String required
+,correo String required minlength(6)
+,celular Long min(3000000000) max (3900000000)
+,tipoDocumento TipoDocumento required
+,numeroDocumento String required
+,primerNombre String required
+,segundoNombre String
+,primerApellido String required
+,segundoApellido String
+,ultimoIngreso Instant
+,inicioInactivacion Instant
+,finInactivacion Instant
+,fechaCreacion Instant
+,creadoPor String
+}
+entity LogUso {
+@Id logUsoId Long
+,usuario String
+,opcion String required
+,fechaHora Instant
+,tipoDocumento TipoDocumento
+,numeroDocumento String
+,pin String
+,clienteSospechoso String
+,datosAnteriores String
+}
+entity GrupoParametro {
+@Id grupoParametroId Long
+,nombre String required
+,activo String required
+}
+entity Parametro {
+@Id parametroId Long
+,valor String
+,descripcion String
+,cifrado Boolean
+}
+relationship ManyToMany {
+  Rol to Usuario
+}
+relationship OneToMany {
+  GrupoParametro{Parametro(parametroId)} to Parametro{GrupoPar(grupoParametroId)}
+}
+paginate Parametro with pagination
+    

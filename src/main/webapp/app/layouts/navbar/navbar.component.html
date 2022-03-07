@@ -1,7 +1,7 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span class="navbar-title">GWPrivadoRastreoGiros</span>
+    <span class="navbar-title">Rastreo Giros</span>
     <span class="navbar-version">{{ version }}</span>
   </a>
   <a
@@ -16,19 +16,19 @@
   >
     <fa-icon icon="bars"></fa-icon>
   </a>
-  <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
+  <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="home"></fa-icon>
-            <span>Home</span>
+            <span>Inicio</span>
           </span>
         </a>
       </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
-        *ngSwitchCase="true"
+        *jhiHasAnyAuthority="['ADMIN', 'GESTOR']"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -38,15 +38,75 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
             <fa-icon icon="th-list"></fa-icon>
-            <span>Entities</span>
+            <span>Gestión Aplicación</span>
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li *jhiHasAnyAuthority="['ADMIN']">
+            <a
+              class="dropdown-item"
+              routerLink="rol"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Rol</span>
+            </a>
+          </li>
+          <li *jhiHasAnyAuthority="['ADMIN']">
+            <a
+              class="dropdown-item"
+              routerLink="usuario"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Usuario</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="log-uso"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Reporte rastreo Giro</span>
+            </a>
+          </li>
+          <li *jhiHasAnyAuthority="['ADMIN']">
+            <a
+              class="dropdown-item"
+              routerLink="grupo-parametro"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Grupo Parametro</span>
+            </a>
+          </li>
+          <li *jhiHasAnyAuthority="['ADMIN']">
+            <a
+              class="dropdown-item"
+              routerLink="parametro"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Parametro</span>
+            </a>
+          </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
       <li
-        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        *jhiHasAnyAuthority="['ADMIN-TI']"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -56,7 +116,7 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
           <span>
             <fa-icon icon="users-cog"></fa-icon>
-            <span>Administration</span>
+            <span>Técnico</span>
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
@@ -105,11 +165,12 @@
         display="dynamic"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        [ngSwitch]="account !== null"
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
             <fa-icon icon="user"></fa-icon>
-            <span>Account</span>
+            <span>Cuenta</span>
           </span>
           <span *ngIf="account?.imageUrl">
             <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />

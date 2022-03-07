@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="grupoParametro">
+      <h2 data-cy="grupoParametroDetailsHeading"><span>Grupo Parámetro</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Grupo Parametro Id</span></dt>
+        <dd>
+          <span>{{ grupoParametro.grupoParametroId }}</span>
+        </dd>
+        <dt><span>Nombre</span></dt>
+        <dd>
+          <span>{{ grupoParametro.nombre }}</span>
+        </dd>
+        <dt><span>Activo</span></dt>
+        <dd>
+          <span>{{ grupoParametro.activo }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atrás</span>
+      </button>
+
+      <button type="button" [routerLink]="['/grupo-parametro', grupoParametro.grupoParametroId, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

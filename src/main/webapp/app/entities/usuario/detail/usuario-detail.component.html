@@ -1,0 +1,96 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="usuario">
+      <h2 data-cy="usuarioDetailsHeading"><span>Usuario</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Usuario Id</span></dt>
+        <dd>
+          <span>{{ usuario.usuarioId }}</span>
+        </dd>
+        <dt><span>Tipo Usuario</span></dt>
+        <dd>
+          <span>{{ usuario.tipoUsuario }}</span>
+        </dd>
+        <dt><span>Username</span></dt>
+        <dd>
+          <span>{{ usuario.username }}</span>
+        </dd>
+        <dt><span>Clave</span></dt>
+        <dd>
+          <span>**************</span>
+        </dd>
+        <dt><span>Activo</span></dt>
+        <dd>
+          <span>{{ usuario.activo }}</span>
+        </dd>
+        <dt><span>Correo</span></dt>
+        <dd>
+          <span>{{ usuario.correo }}</span>
+        </dd>
+        <dt><span>Celular</span></dt>
+        <dd>
+          <span>{{ usuario.celular }}</span>
+        </dd>
+        <dt><span>Tipo Documento</span></dt>
+        <dd>
+          <span>{{ usuario.tipoDocumento }}</span>
+        </dd>
+        <dt><span>Numero Documento</span></dt>
+        <dd>
+          <span>{{ usuario.numeroDocumento }}</span>
+        </dd>
+        <dt><span>Primer Nombre</span></dt>
+        <dd>
+          <span>{{ usuario.primerNombre }}</span>
+        </dd>
+        <dt><span>Segundo Nombre</span></dt>
+        <dd>
+          <span>{{ usuario.segundoNombre }}</span>
+        </dd>
+        <dt><span>Primer Apellido</span></dt>
+        <dd>
+          <span>{{ usuario.primerApellido }}</span>
+        </dd>
+        <dt><span>Segundo Apellido</span></dt>
+        <dd>
+          <span>{{ usuario.segundoApellido }}</span>
+        </dd>
+        <dt><span>Ultimo Ingreso</span></dt>
+        <dd>
+          <span>{{ usuario.ultimoIngreso | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Inicio Inactivacion</span></dt>
+        <dd>
+          <span>{{ usuario.inicioInactivacion | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Fin Inactivacion</span></dt>
+        <dd>
+          <span>{{ usuario.finInactivacion | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Fecha Creacion</span></dt>
+        <dd>
+          <span>{{ usuario.fechaCreacion | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Creado Por</span></dt>
+        <dd>
+          <span>{{ usuario.creadoPor }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atrás</span>
+      </button>
+
+      <button type="button" [routerLink]="['/usuario', usuario.usuarioId, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

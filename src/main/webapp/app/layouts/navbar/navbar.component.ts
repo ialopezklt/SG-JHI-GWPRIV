@@ -40,7 +40,9 @@ export class NavbarComponent implements OnInit {
     });
 
     this.accountService.getAuthenticationState().subscribe(account => {
+      console.log('Entro a verificar account');
       this.account = account;
+      console.log(account);
     });
   }
 

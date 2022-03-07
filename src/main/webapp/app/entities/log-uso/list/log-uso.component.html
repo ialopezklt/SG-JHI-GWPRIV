@@ -1,0 +1,92 @@
+<div>
+  <h2 id="page-heading" data-cy="LogUsoHeading">
+    <span>Reporte de rastreo de Giro</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Recargar Lista</span>
+      </button>
+
+      <!--button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-log-uso"
+        [routerLink]="['/log-uso/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Log Uso </span>
+      </button-->
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="logUsos?.length === 0">
+    <span>No hay registros</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="logUsos && logUsos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Log Id</span></th>
+          <th scope="col"><span>Usuario</span></th>
+          <th scope="col"><span>Opción</span></th>
+          <th scope="col"><span>Fecha Hora</span></th>
+          <th scope="col"><span>Tipo Documento</span></th>
+          <th scope="col"><span>Número Documento</span></th>
+          <th scope="col"><span>Pin</span></th>
+          <th scope="col"><span>Cliente Sospechoso</span></th>
+          <th scope="col"><span>Datos Anteriores</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let logUso of logUsos; trackBy: trackLogUsoId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/log-uso', logUso.logUsoId, 'view']">{{ logUso.logUsoId }}</a>
+          </td>
+          <td>{{ logUso.usuario }}</td>
+          <td>{{ logUso.opcion }}</td>
+          <td>{{ logUso.fechaHora | formatMediumDatetime }}</td>
+          <td>{{ logUso.tipoDocumento }}</td>
+          <td>{{ logUso.numeroDocumento }}</td>
+          <td>{{ logUso.pin }}</td>
+          <td>{{ logUso.clienteSospechoso }}</td>
+          <td>{{ logUso.datosAnteriores }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/log-uso', logUso.logUsoId, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Detalle</span>
+              </button>
+
+              <!--button
+                type="submit"
+                [routerLink]="['/log-uso', logUso.logUsoId, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(logUso)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button-->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

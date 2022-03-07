@@ -14,13 +14,17 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const serverApiUrl = this.applicationConfigService.getEndpointFor('');
+    console.log('Entro a interceptor');
+    const serverApiUrl = this.applicationConfigService.getEndpointFor('', 'backrastreogiros');
+    console.log(serverApiUrl);
     if (!request.url || (request.url.startsWith('http') && !(serverApiUrl && request.url.startsWith(serverApiUrl)))) {
       return next.handle(request);
     }
 
     const token: string | null =
       this.localStorageService.retrieve('authenticationToken') ?? this.sessionStorageService.retrieve('authenticationToken');
+    console.log('token:');
+    console.log(token);
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -28,6 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
         },
       });
     }
+    console.log(request);
     return next.handle(request);
   }
 }

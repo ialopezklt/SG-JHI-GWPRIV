@@ -1,0 +1,117 @@
+{
+  "applications": "*",
+  "changelogDate": "20220303235623",
+  "databaseType": "no",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "usuario",
+  "fields": [
+    {
+      "fieldName": "usuarioId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "tipoUsuario",
+      "fieldType": "TipoUsuario",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Interno (I),Externo (E),Dual (D)"
+    },
+    {
+      "fieldName": "username",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "5"
+    },
+    {
+      "fieldName": "clave",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "5"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "correo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "6"
+    },
+    {
+      "fieldName": "celular",
+      "fieldType": "Long",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "3900000000",
+      "fieldValidateRulesMin": "3000000000"
+    },
+    {
+      "fieldName": "tipoDocumento",
+      "fieldType": "TipoDocumento",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CedulaCiudadania (CC),CedulaExtranjeria (CE),Pasaporte (PA)"
+    },
+    {
+      "fieldName": "numeroDocumento",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primerNombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoNombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "primerApellido",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoApellido",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ultimoIngreso",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "inicioInactivacion",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "finInactivacion",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "fechaCreacion",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "creadoPor",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Usuario",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "rol",
+      "otherEntityRelationshipName": "usuario",
+      "ownerSide": false,
+      "relationshipName": "rol",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

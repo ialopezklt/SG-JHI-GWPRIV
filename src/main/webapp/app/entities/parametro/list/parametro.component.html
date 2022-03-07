@@ -1,0 +1,106 @@
+<div>
+  <h2 id="page-heading" data-cy="ParametroHeading">
+    <span>Parámetros</span>
+
+    <div class="d-flex justify-content-end">
+      <select [(ngModel)]="grupoParametroSeleccionado" class="form-control" style="width: 30em">
+        <option value="all" selected>Todos</option>
+        <option *ngFor="let grupo of listaGrupos" [ngValue]="grupo.grupoParametroId">
+          {{ grupo.nombre }}
+        </option></select
+      >&nbsp;
+
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Recargar Lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-parametro"
+        [routerLink]="['/parametro/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Crear Parámetro </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="parametros?.length === 0">
+    <span>No se encontraron parámetros</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="parametros && parametros.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Parametro Id</span></th>
+          <th scope="col"><span>Valor</span></th>
+          <th scope="col"><span>Descripción</span></th>
+          <th scope="col"><span>Cifrado</span></th>
+          <th scope="col"><span>Grupo Par</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let parametro of parametros; trackBy: trackParametroId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/parametro', parametro.parametroId, 'view']">{{ parametro.parametroId }}</a>
+          </td>
+          <td>
+            <div style="max-height: 5em; overflow: hidden; text-overflow: ellipsis">
+              <span *ngIf="parametro.cifrado"><fa-icon icon="ban"></fa-icon></span>
+              <span *ngIf="!parametro.cifrado">{{ parametro.valor }}</span>
+            </div>
+          </td>
+          <td>{{ parametro.descripcion }}</td>
+          <td>
+            <span *ngIf="parametro.cifrado" style="text-align: center"><fa-icon icon="lock"></fa-icon></span>
+            <span *ngIf="!parametro.cifrado" style="text-align: center"><fa-icon icon="lock-open"></fa-icon></span>
+            <!-- span style="text-align:center">{{ parametro.cifrado }}</span -->
+          </td>
+          <td>
+            <div *ngIf="parametro.grupoParametro">
+              <a [routerLink]="['/grupo-parametro', parametro.grupoParametro?.grupoParametroId, 'view']">
+                {{ parametro.grupoParametro.nombre }}
+              </a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/parametro', parametro.parametroId, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Ver</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/parametro', parametro.parametroId, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(parametro)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Borrar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

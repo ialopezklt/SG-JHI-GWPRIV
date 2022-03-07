@@ -104,6 +104,7 @@ Generic styles
 
 .footer {
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  bottom: 0;
 }
 
 .hand,
@@ -200,3 +201,7 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.altura-maxima {
+  height: 80vh;
+}

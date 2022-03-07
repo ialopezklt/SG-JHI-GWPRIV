@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-parametro-heading" data-cy="ParametroCreateUpdateHeading">Crear o editar Parámetro</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('parametroId')!.value == null">
+          <label class="form-control-label" for="field_parametroId">Parámetro Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="parametroId"
+            id="field_parametroId"
+            data-cy="parametroId"
+            formControlName="parametroId"
+            [readonly]="true"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_valor">Valor</label>
+          <input type="text" class="form-control" name="valor" id="field_valor" data-cy="valor" formControlName="valor" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_descripcion">Descripción</label>
+          <input
+            type="text"
+            class="form-control"
+            name="descripcion"
+            id="field_descripcion"
+            data-cy="descripcion"
+            formControlName="descripcion"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_cifrado">Cifrado</label>
+          <input type="checkbox" class="form-check" name="cifrado" id="field_cifrado" data-cy="cifrado" formControlName="cifrado" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_grupoPar">Grupo</label>
+          <select class="form-control" id="field_grupoPar" data-cy="grupoPar" name="grupoPar" formControlName="grupoPar">
+            <option [ngValue]="null">Seleccione un grupo</option>
+            <option
+              [ngValue]="
+                grupoParametroOption.grupoParametroId === editForm.get('grupoPar')!.value?.grupoParametroId
+                  ? editForm.get('grupoPar')!.value
+                  : grupoParametroOption
+              "
+              *ngFor="let grupoParametroOption of grupoParametrosSharedCollection; trackBy: trackGrupoParametroByGrupoParametroId"
+            >
+              {{ grupoParametroOption.nombre }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

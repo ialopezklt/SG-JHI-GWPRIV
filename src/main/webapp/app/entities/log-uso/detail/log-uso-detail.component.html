@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="logUso">
+      <h2 data-cy="logUsoDetailsHeading"><span>Log Uso</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Log Uso Id</span></dt>
+        <dd>
+          <span>{{ logUso.logUsoId }}</span>
+        </dd>
+        <dt><span>Usuario</span></dt>
+        <dd>
+          <span>{{ logUso.usuario }}</span>
+        </dd>
+        <dt><span>Opcion</span></dt>
+        <dd>
+          <span>{{ logUso.opcion }}</span>
+        </dd>
+        <dt><span>Fecha Hora</span></dt>
+        <dd>
+          <span>{{ logUso.fechaHora | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Tipo Documento</span></dt>
+        <dd>
+          <span>{{ logUso.tipoDocumento }}</span>
+        </dd>
+        <dt><span>Numero Documento</span></dt>
+        <dd>
+          <span>{{ logUso.numeroDocumento }}</span>
+        </dd>
+        <dt><span>Pin</span></dt>
+        <dd>
+          <span>{{ logUso.pin }}</span>
+        </dd>
+        <dt><span>Cliente Sospechoso</span></dt>
+        <dd>
+          <span>{{ logUso.clienteSospechoso }}</span>
+        </dd>
+        <dt><span>Datos Anteriores</span></dt>
+        <dd>
+          <span>{{ logUso.datosAnteriores }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/log-uso', logUso.logUsoId, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

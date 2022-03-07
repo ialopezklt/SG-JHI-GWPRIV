@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20220303235626",
+  "databaseType": "no",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "parametro",
+  "fields": [
+    {
+      "fieldName": "parametroId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "valor",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cifrado",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Parametro",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "grupoParametroId",
+      "otherEntityName": "grupoParametro",
+      "otherEntityRelationshipName": "parametro",
+      "relationshipName": "grupoPar",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

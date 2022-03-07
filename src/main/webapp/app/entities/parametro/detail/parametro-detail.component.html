@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="parametro">
+      <h2 data-cy="parametroDetailsHeading"><span>Parámetro</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Parametro Id</span></dt>
+        <dd>
+          <span>{{ parametro.parametroId }}</span>
+        </dd>
+        <dt><span>Valor</span></dt>
+        <dd>
+          <span>{{ parametro.valor }}</span>
+        </dd>
+        <dt><span>Descripción</span></dt>
+        <dd>
+          <span>{{ parametro.descripcion }}</span>
+        </dd>
+        <dt><span>Cifrado</span></dt>
+        <dd>
+          <span>{{ parametro.cifrado }}</span>
+        </dd>
+        <dt><span>Grupo Par</span></dt>
+        <dd>
+          <div *ngIf="parametro.grupoParametro">
+            <a [routerLink]="['/grupo-parametro', parametro.grupoParametro?.grupoParametroId, 'view']">{{
+              parametro.grupoParametro?.grupoParametroId
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atrás</span>
+      </button>
+
+      <button type="button" [routerLink]="['/parametro', parametro.parametroId, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

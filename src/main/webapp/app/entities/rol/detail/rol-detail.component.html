@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="rol">
+      <h2 data-cy="rolDetailsHeading"><span>Rol</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Rol Id</span></dt>
+        <dd>
+          <span>{{ rol.rolId }}</span>
+        </dd>
+        <dt><span>Nombre</span></dt>
+        <dd>
+          <span>{{ rol.nombre }}</span>
+        </dd>
+        <dt><span>Activo</span></dt>
+        <dd>
+          <span>{{ rol.activo }}</span>
+        </dd>
+        <dt><span>Usuarios con el rol</span></dt>
+        <dd>
+          <span *ngFor="let usuario of rol.usuarios; let last = last">
+            <a [routerLink]="['/usuario', usuario?.usuarioId, 'view']">{{ usuario.usuarioId }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/rol', rol.rolId, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

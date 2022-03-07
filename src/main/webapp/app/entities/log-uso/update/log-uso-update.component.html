@@ -1,0 +1,123 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-log-uso-heading" data-cy="LogUsoCreateUpdateHeading">Create or edit a Log Uso</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('logUsoId')!.value == null">
+          <label class="form-control-label" for="field_logUsoId">Log Uso Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="logUsoId"
+            id="field_logUsoId"
+            data-cy="logUsoId"
+            formControlName="logUsoId"
+            [readonly]="true"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_usuario">Usuario</label>
+          <input type="text" class="form-control" name="usuario" id="field_usuario" data-cy="usuario" formControlName="usuario" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_opcion">Opcion</label>
+          <input type="text" class="form-control" name="opcion" id="field_opcion" data-cy="opcion" formControlName="opcion" />
+          <div *ngIf="editForm.get('opcion')!.invalid && (editForm.get('opcion')!.dirty || editForm.get('opcion')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('opcion')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_fechaHora">Fecha Hora</label>
+          <div class="d-flex">
+            <input
+              id="field_fechaHora"
+              data-cy="fechaHora"
+              type="datetime-local"
+              class="form-control"
+              name="fechaHora"
+              formControlName="fechaHora"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_tipoDocumento">Tipo Documento</label>
+          <select
+            class="form-control"
+            name="tipoDocumento"
+            formControlName="tipoDocumento"
+            id="field_tipoDocumento"
+            data-cy="tipoDocumento"
+          >
+            <option [ngValue]="null"></option>
+            <option *ngFor="let tipoDocumento of tipoDocumentoValues" [value]="tipoDocumento">tipoDocumento</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numeroDocumento">Numero Documento</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroDocumento"
+            id="field_numeroDocumento"
+            data-cy="numeroDocumento"
+            formControlName="numeroDocumento"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_pin">Pin</label>
+          <input type="text" class="form-control" name="pin" id="field_pin" data-cy="pin" formControlName="pin" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_clienteSospechoso">Cliente Sospechoso</label>
+          <input
+            type="text"
+            class="form-control"
+            name="clienteSospechoso"
+            id="field_clienteSospechoso"
+            data-cy="clienteSospechoso"
+            formControlName="clienteSospechoso"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_datosAnteriores">Datos Anteriores</label>
+          <input
+            type="text"
+            class="form-control"
+            name="datosAnteriores"
+            id="field_datosAnteriores"
+            data-cy="datosAnteriores"
+            formControlName="datosAnteriores"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
