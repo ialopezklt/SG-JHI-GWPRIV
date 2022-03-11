@@ -1,38 +1,120 @@
 <div>
   <h2 id="page-heading" data-cy="LogUsoHeading">
-    <span>Reporte de rastreo de Giro</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Recargar Lista</span>
-      </button>
-
-      <!--button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-log-uso"
-        [routerLink]="['/log-uso/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Log Uso </span>
-      </button-->
-    </div>
+    <span>Gestión de informes y log</span>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <!-- FECHA DE INICIO -->
+        <label for="txtFechaInicio">Fecha Inicio </label><br />
+        <div class="input-group">
+          <input
+            id="txtFechaInicio"
+            placeholder="yyyy-mm-dd"
+            type="text"
+            class="form-control"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            (dateSelect)="onDateSelectF1($event)"
+          />
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+            <fa-icon icon="calendar-day"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-4">
+        <label for="txtFechaInicio">Fecha Fin </label><br />
+        <div class="input-group">
+          <!--  FECHA DE FIN -->
+          <input
+            id="txtFechaFin"
+            type="text"
+            placeholder="yyyy-mm-dd"
+            class="form-control"
+            ngbDatepicker
+            #e="ngbDatepicker"
+            (dateSelect)="onDateSelectF2($event)"
+          />
+          <button class="btn btn-outline-secondary calendar" (click)="e.toggle()" type="button">
+            <fa-icon icon="calendar-day"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <label for="txtPin">PIN</label><br />
+        <input type="tel" id="txtPin" [(ngModel)]="parPin" />
+      </div>
+      <div class="col-3">
+        <label for="txtId">Número de identificación</label>
+        <input type="text" id="txtId" size="20" [(ngModel)]="parNumeroIdentificacion" />
+      </div>
+      <div class="col-3">
+        Cliente sospechoso<br />
+        <div class="form-check form-check-inline">
+          <input
+            type="radio"
+            id="tbClienteSospechosoSi"
+            mdbRadio
+            class="form-check-input"
+            name="flexRadioDefault"
+            value="S"
+            [(ngModel)]="parClienteSospechoso"
+          />
+          <label for="rbClienteSospechoso">Si</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            type="radio"
+            id="tbClienteSospechosoNo"
+            class="form-check-input"
+            name="flexRadioDefault"
+            value="N"
+            [(ngModel)]="parClienteSospechoso"
+          />
+          <label for="rbClienteSospechoso">No</label>
+        </div>
+      </div>
+      <div class="col-3" style="text-align: end">
+        <div class="form-check form-check-inline">
+          <button id="btnExportar" *ngIf="logUsos?.length! > 0" class="btn btn-primary" (click)="exportarExcel()">
+            <fa-icon icon="file-excel"></fa-icon>
+            <span>Exportar</span>
+          </button>
+        </div>
+        <!--button
+            id="jh-create-entity"
+            data-cy="entityCreateButton"
+            class="btn btn-primary jh-create-entity create-log-uso"
+            [routerLink]="['/log-uso/new']"
+          >
+            <fa-icon icon="plus"></fa-icon>
+            <span> Create a new Log Uso </span>
+          </button-->
+        <div class="justify-content-end form-check form-check-inline">
+          <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+            <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+            <span>Recargar Lista</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="alert alert-warning" id="no-result" *ngIf="logUsos?.length === 0">
-    <span>No hay registros</span>
+    <span>No hay registros seleccionados</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="logUsos && logUsos.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table id="tab_logs" class="table table-striped hover" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span>Log Id</span></th>
+          <th scope="col" *ngIf="false"><span>Log Id</span></th>
           <th scope="col"><span>Usuario</span></th>
           <th scope="col"><span>Opción</span></th>
           <th scope="col"><span>Fecha Hora</span></th>
@@ -41,12 +123,12 @@
           <th scope="col"><span>Pin</span></th>
           <th scope="col"><span>Cliente Sospechoso</span></th>
           <th scope="col"><span>Datos Anteriores</span></th>
-          <th scope="col"></th>
+          <th scope="col" *ngIf="columnaNoExportar"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let logUso of logUsos; trackBy: trackLogUsoId" data-cy="entityTable">
-          <td>
+          <td *ngIf="false">
             <a [routerLink]="['/log-uso', logUso.logUsoId, 'view']">{{ logUso.logUsoId }}</a>
           </td>
           <td>{{ logUso.usuario }}</td>
@@ -57,7 +139,7 @@
           <td>{{ logUso.pin }}</td>
           <td>{{ logUso.clienteSospechoso }}</td>
           <td>{{ logUso.datosAnteriores }}</td>
-          <td class="text-right">
+          <td *ngIf="columnaNoExportar" class="text-right">
             <div class="btn-group">
               <button
                 type="submit"

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from 'app/shared/shared.module';
 import { RolComponent } from './list/rol.component';
 import { RolDetailComponent } from './detail/rol-detail.component';
@@ -10,5 +10,6 @@ import { RolRoutingModule } from './route/rol-routing.module';
   imports: [SharedModule, RolRoutingModule],
   declarations: [RolComponent, RolDetailComponent, RolUpdateComponent, RolDeleteDialogComponent],
   entryComponents: [RolDeleteDialogComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RolModule {}

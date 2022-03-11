@@ -24,8 +24,8 @@
         </dd>
         <dt><span>Usuarios con el rol</span></dt>
         <dd>
-          <span *ngFor="let usuario of rol.usuarios; let last = last">
-            <a [routerLink]="['/usuario', usuario?.usuarioId, 'view']">{{ usuario.usuarioId }}</a
+          <span *ngFor="let usuario of rol.usuariosPorRol; let last = last">
+            <a [routerLink]="['/usuario', usuario?.usuarioId, 'view']">{{ usuario.username }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>

@@ -32,11 +32,14 @@ export class UsuarioUpdateComponent implements OnInit {
   ];
   accountService: AccountService;
   usuarioLogueado = '';
+  estadoUsuario = 'Activo';
+  estadoPantalla = 'creacion'; // indica si la pantalla es de creacion o edicion
+  tipoUsuarioEnFormulario = '';
 
   editForm = this.fb.group({
     usuarioId: [],
     tipoUsuario: [null, [Validators.required]],
-    username: [null, [Validators.required, Validators.minLength(5)]],
+    username: [null, [Validators.required, Validators.minLength(5), Validators.pattern('[a-zA-Z0-9.-]+')]],
     clave: ['123456789', []],
     activo: [true, [Validators.required]],
     correo: [null, [Validators.required, Validators.minLength(6)]],
@@ -67,8 +70,6 @@ export class UsuarioUpdateComponent implements OnInit {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
         this.usuarioLogueado = account.login;
-        console.log('cuenta sesion:');
-        console.log(this.usuarioLogueado);
       }
     });
 
@@ -76,8 +77,18 @@ export class UsuarioUpdateComponent implements OnInit {
       if (usuario.usuarioId === undefined) {
         const today = dayjs().startOf('day');
         usuario.fechaCreacion = today;
-      }
 
+        this.estadoPantalla = 'creacion';
+        console.log('cuenta sesion:');
+        console.log(this.usuarioLogueado);
+        usuario.creadoPor = this.usuarioLogueado;
+        usuario.tipoUsuario = 'Interno';
+        const fecha = new Date();
+        usuario.clave = btoa(fecha.toISOString());
+      } else {
+        this.estadoPantalla = 'edicion';
+      }
+      this.tipoUsuarioEnFormulario = usuario.tipoUsuario;
       this.updateForm(usuario);
     });
   }
@@ -95,6 +106,10 @@ export class UsuarioUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.usuarioService.create(usuario));
     }
+  }
+
+  cambiaEstadoUsuario(): void {
+    this.estadoUsuario = this.estadoUsuario === 'Activo' ? 'Inactivo' : 'Activo';
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IUsuario>>): void {
@@ -137,6 +152,7 @@ export class UsuarioUpdateComponent implements OnInit {
       fechaCreacion: usuario.fechaCreacion ? usuario.fechaCreacion.format(DATE_TIME_FORMAT) : null,
       creadoPor: usuario.creadoPor,
     });
+    this.estadoUsuario = usuario.activo ? 'Activo' : 'Inactivo';
   }
 
   protected createFromForm(): IUsuario {
@@ -155,6 +171,14 @@ export class UsuarioUpdateComponent implements OnInit {
       segundoNombre: this.editForm.get(['segundoNombre'])!.value,
       primerApellido: this.editForm.get(['primerApellido'])!.value,
       segundoApellido: this.editForm.get(['segundoApellido'])!.value,
+      fechaCreacion: this.editForm.get(['fechaCreacion'])!.value
+        ? dayjs(this.editForm.get(['fechaCreacion'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      creadoPor: this.editForm.get(['creadoPor'])!.value,
+    };
+  }
+
+  /*
       ultimoIngreso: this.editForm.get(['ultimoIngreso'])!.value
         ? dayjs(this.editForm.get(['ultimoIngreso'])!.value, DATE_TIME_FORMAT)
         : undefined,
@@ -164,11 +188,6 @@ export class UsuarioUpdateComponent implements OnInit {
       finInactivacion: this.editForm.get(['finInactivacion'])!.value
         ? dayjs(this.editForm.get(['finInactivacion'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      fechaCreacion: this.editForm.get(['fechaCreacion'])!.value
-        ? dayjs(this.editForm.get(['fechaCreacion'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      //        creadoPor: this.editForm.get(['creadoPor'])!.value,
-      creadoPor: this.usuarioLogueado,
-    };
-  }
+
+*/
 }

@@ -7,8 +7,8 @@
 
     <groupId>co.com.supergiros.rastreogiros</groupId>
     <artifactId>gw-privado-rastreo-giros</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>0.0.1-Beta</version>
+    <packaging>war</packaging>
     <name>GW Privado Rastreo Giros</name>
     <description>Description for GWPrivadoRastreoGiros</description>
 

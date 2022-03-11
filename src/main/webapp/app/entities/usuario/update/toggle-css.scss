@@ -2,6 +2,8 @@
 $blue: #269bff;
 $bg-light: #f2f2f2;
 $bg-med: #eee;
+$green: green;
+$red: red;
 
 /* the magic */
 div.checkbox.switcher,
@@ -19,8 +21,12 @@ div.radio.switcher {
         margin-right: 10px;
         width: 56px;
         height: 28px;
+        /*
         background: $bg-light;
         border: 1px solid $bg-med;
+        */
+        background: $red;
+        border: 1px solid $red;
         border-radius: 50px;
         transition: all 0.3s ease-in-out;
         small {
@@ -35,8 +41,8 @@ div.radio.switcher {
         }
       }
       &:checked + span {
-        background: $blue;
-        border-color: $blue;
+        background: $green;
+        border-color: $green;
         small {
           left: 50%;
         }

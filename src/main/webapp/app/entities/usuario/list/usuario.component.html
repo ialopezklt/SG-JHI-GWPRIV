@@ -40,16 +40,16 @@
           <th scope="col"><span>Correo</span></th>
           <th scope="col"><span>Celular</span></th>
           <th scope="col"><span>Tipo Documento</span></th>
-          <th scope="col"><span>Numero Documento</span></th>
+          <th scope="col"><span>Número Documento</span></th>
           <th scope="col"><span>Primer Nombre</span></th>
           <th scope="col"><span>Segundo Nombre</span></th>
           <th scope="col"><span>Primer Apellido</span></th>
           <th scope="col"><span>Segundo Apellido</span></th>
-          <th scope="col"><span>Ultimo Ingreso</span></th>
+          <th *ngIf="false" scope="col"><span>Último Ingreso</span></th>
           <th scope="col"><span>Inicio Inactivacion</span></th>
           <th scope="col"><span>Fin Inactivacion</span></th>
-          <th scope="col"><span>Fecha Creacion</span></th>
-          <th scope="col"><span>Creado Por</span></th>
+          <th *ngIf="false" scope="col"><span>Fecha Creacion</span></th>
+          <th *ngIf="false" scope="col"><span>Creado Por</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -70,11 +70,11 @@
           <td>{{ usuario.segundoNombre }}</td>
           <td>{{ usuario.primerApellido }}</td>
           <td>{{ usuario.segundoApellido }}</td>
-          <td>{{ usuario.ultimoIngreso | formatMediumDatetime }}</td>
+          <td *ngIf="false">{{ usuario.ultimoIngreso | formatMediumDatetime }}</td>
           <td>{{ usuario.inicioInactivacion | formatMediumDatetime }}</td>
           <td>{{ usuario.finInactivacion | formatMediumDatetime }}</td>
-          <td>{{ usuario.fechaCreacion | formatMediumDatetime }}</td>
-          <td>{{ usuario.creadoPor }}</td>
+          <td *ngIf="false">{{ usuario.fechaCreacion | formatMediumDatetime }}</td>
+          <td *ngIf="false">{{ usuario.creadoPor }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button
@@ -97,7 +97,7 @@
                 <span class="d-none d-md-inline">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(usuario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button *ngIf="false" type="submit" (click)="delete(usuario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Borrar</span>
               </button>

@@ -5,6 +5,7 @@ import { LogUsoDetailComponent } from './detail/log-uso-detail.component';
 import { LogUsoUpdateComponent } from './update/log-uso-update.component';
 import { LogUsoDeleteDialogComponent } from './delete/log-uso-delete-dialog.component';
 import { LogUsoRoutingModule } from './route/log-uso-routing.module';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [SharedModule, LogUsoRoutingModule],

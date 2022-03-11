@@ -9,6 +9,8 @@ import { IRol, Rol } from '../rol.model';
 import { RolService } from '../service/rol.service';
 import { IUsuario } from 'app/entities/usuario/usuario.model';
 import { UsuarioService } from 'app/entities/usuario/service/usuario.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'jhi-rol-update',
@@ -18,6 +20,8 @@ export class RolUpdateComponent implements OnInit {
   isSaving = false;
 
   usuariosSharedCollection: IUsuario[] = [];
+  usuarioAAdcionalAlRol!: IUsuario;
+  mensajeResultadoBusqueda = '';
 
   editForm = this.fb.group({
     rolId: [],
@@ -30,11 +34,15 @@ export class RolUpdateComponent implements OnInit {
     protected rolService: RolService,
     protected usuarioService: UsuarioService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private modalService: NgbModal,
+    private spinnerService: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ rol }) => {
+      console.log('rol recibido:');
+      console.log(rol);
       this.updateForm(rol);
 
       this.loadRelationshipsOptions();
@@ -70,6 +78,33 @@ export class RolUpdateComponent implements OnInit {
     return option;
   }
 
+  openModal(contenidoModal: any): void {
+    this.modalService.open(contenidoModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(result => {
+      const botonModal = result;
+      if (botonModal === 'Guardar') {
+        this.usuariosSharedCollection.push(this.usuarioAAdcionalAlRol);
+      }
+    });
+  }
+
+  buscarUsuario(nombreUsuario: HTMLInputElement): void {
+    this.spinnerService.show();
+    this.mensajeResultadoBusqueda = '';
+    console.log('username recibido del modal:');
+    console.log(nombreUsuario.value);
+    this.usuarioService.findByUsername(nombreUsuario.value).subscribe({
+      next: usuario => {
+        this.spinnerService.hide();
+        this.usuarioAAdcionalAlRol = usuario.body!;
+        this.mensajeResultadoBusqueda = this.usuarioAAdcionalAlRol.primerNombre! + ' ' + this.usuarioAAdcionalAlRol.primerApellido!;
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.mensajeResultadoBusqueda = 'Usuario no encontrado';
+      },
+    });
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRol>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -90,16 +125,20 @@ export class RolUpdateComponent implements OnInit {
   }
 
   protected updateForm(rol: IRol): void {
+    if (rol.rolId === undefined) {
+      rol.activo = 'S';
+    }
+
     this.editForm.patchValue({
       rolId: rol.rolId,
       nombre: rol.nombre,
       activo: rol.activo,
-      usuarios: rol.usuarios,
+      usuarios: rol.usuariosPorRol,
     });
 
     this.usuariosSharedCollection = this.usuarioService.addUsuarioToCollectionIfMissing(
       this.usuariosSharedCollection,
-      ...(rol.usuarios ?? [])
+      ...(rol.usuariosPorRol ?? [])
     );
   }
 
@@ -121,7 +160,7 @@ export class RolUpdateComponent implements OnInit {
       rolId: this.editForm.get(['rolId'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
       activo: this.editForm.get(['activo'])!.value,
-      usuarios: this.editForm.get(['usuarios'])!.value,
+      usuariosPorRol: this.editForm.get(['usuarios'])!.value,
     };
   }
 }

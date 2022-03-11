@@ -4,7 +4,7 @@ export interface IRol {
   rolId?: number;
   nombre?: string;
   activo?: string | null;
-  usuarios?: IUsuario[] | null;
+  usuariosPorRol?: IUsuario[] | null;
 }
 
 export class Rol implements IRol {

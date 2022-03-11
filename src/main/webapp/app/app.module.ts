@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
@@ -23,6 +23,8 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [
@@ -35,6 +37,8 @@ import { ErrorComponent } from './layouts/error/error.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
+    NgxSpinnerModule,
+    DataTablesModule,
   ],
   providers: [
     Title,
@@ -44,6 +48,7 @@ import { ErrorComponent } from './layouts/error/error.component';
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
   bootstrap: [MainComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
   constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {
