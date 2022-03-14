@@ -93,7 +93,13 @@
                 <span class="d-none d-md-inline">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(parametro)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                type="submit"
+                (click)="delete(parametro)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+                [disabled]="parametro.parametroId! <= 46"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Borrar</span>
               </button>
