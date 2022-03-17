@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20220316170158",
+  "databaseType": "no",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "punto_atencion",
+  "fields": [
+    {
+      "fieldName": "puntoAtencionId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "departamento",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ciudad",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PuntoAtencion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

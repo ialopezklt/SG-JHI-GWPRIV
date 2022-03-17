@@ -14,9 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Entro a interceptor');
     const serverApiUrl = this.applicationConfigService.getEndpointFor('', 'backrastreogiros');
-    console.log(serverApiUrl);
     if (!request.url || (request.url.startsWith('http') && !(serverApiUrl && request.url.startsWith(serverApiUrl)))) {
       return next.handle(request);
     }

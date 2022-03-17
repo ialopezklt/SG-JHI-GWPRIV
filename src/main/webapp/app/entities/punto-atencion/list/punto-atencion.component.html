@@ -1,0 +1,135 @@
+<div>
+  <h2 id="page-heading" data-cy="PuntoAtencionHeading">
+    <span>Puntos de Atención</span>
+
+    <div class="d-flex justify-content-end">
+      <!--form>
+        <div class="form-group row" style="margin-bottom: 0;">
+            <label for="table-filtering-search" >Filtro:</label>
+          <div class="col-md-7 col-sm-auto">
+            <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter">
+          </div>
+        </div>
+      </form-->
+
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Recargar Todos</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-punto-atencion"
+        [routerLink]="['/punto-atencion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Crear Punto Atención </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="puntoAtencions?.length === 0">
+    <span>No se encontraron puntos de atención</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="puntoAtencions && puntoAtencions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Punto Atención Id</span></th>
+          <th scope="col"><span>Departamento</span></th>
+          <th scope="col"><span>Ciudad</span></th>
+          <th scope="col"><span>Dirección</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let puntoAtencion of puntoAtencions; trackBy: trackPuntoAtencionId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/punto-atencion', puntoAtencion.puntoAtencionId, 'view']">{{ puntoAtencion.puntoAtencionId }}</a>
+          </td>
+          <td>{{ puntoAtencion.departamento }}</td>
+          <td>{{ puntoAtencion.ciudad }}</td>
+          <td>{{ puntoAtencion.direccion }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/punto-atencion', puntoAtencion.puntoAtencionId, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Ver</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/punto-atencion', puntoAtencion.puntoAtencionId, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(puntoAtencion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Borrar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+      <!--ngb-pagination [collectionSize]="collectionSize" 
+          [(page)]="page" [pageSize]="pageSize" 
+          (pageChange)="cargarItemsPagina()">
+      </ngb-pagination-->
+
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [boundaryLinks]="true"
+        [pageSize]="pageSize"
+        (pageChange)="cargarItemsPagina()"
+      >
+        <ng-template ngbPaginationPages let-page let-pages="pages">
+          <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+            <div class="mb-3 d-flex flex-nowrap px-2">
+              <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Pág.</label>
+              <input
+                #i
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                class="form-control custom-pages-input"
+                id="paginationInput"
+                [value]="page"
+                (keyup.enter)="selectPage(i.value)"
+                (blur)="selectPage(i.value)"
+                (input)="formatInput($any($event).target)"
+                aria-labelledby="paginationInputLabel paginationDescription"
+                style="width: 5.5rem"
+              />
+              <span id="paginationDescription" class="col-form-label text-nowrap px-2"> de {{ pages.length }}</span>
+            </div>
+          </li>
+        </ng-template>
+      </ngb-pagination>
+
+      <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="cargarItemsPagina()">
+        <option [ngValue]="10">10 items por pág.</option>
+        <option [ngValue]="20">20 items por pág.</option>
+        <option [ngValue]="60">60 items por pág.</option>
+      </select>
+    </div>
+  </div>
+</div>

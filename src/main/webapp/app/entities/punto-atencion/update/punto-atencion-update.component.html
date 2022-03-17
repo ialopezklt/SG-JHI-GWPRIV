@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-punto-atencion-heading" data-cy="PuntoAtencionCreateUpdateHeading">Crear o editar Punto Atención</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('puntoAtencionId')!.value == null">
+          <label class="form-control-label" for="field_puntoAtencionId">Punto Atencion Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="puntoAtencionId"
+            id="field_puntoAtencionId"
+            data-cy="puntoAtencionId"
+            formControlName="puntoAtencionId"
+            [readonly]="true"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_departamento">Departamento</label>
+          <select
+            id="selDepartamentos"
+            class="form-control"
+            formControlName="departamento"
+            #depto
+            required
+            (change)="actualizaMunicipios(depto.value)"
+          >
+            <option
+              *ngFor="let dpto of listaDepartamentos"
+              [selected]="dpto.departamento === getDepartamento.value"
+              [value]="dpto.departamento"
+            >
+              {{ dpto.departamento | uppercase }}
+            </option>
+          </select>
+
+          <!-- input
+            type="text"
+            class="form-control"
+            name="departamento"
+            id="field_departamento"
+            data-cy="departamento"
+            formControlName="departamento"
+          / -->
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_ciudad">Ciudad</label>
+          <select id="selCiudades" class="form-control" formControlName="ciudad" required>
+            <option
+              *ngFor="let ciudad of listaCiudadPorDepartamento"
+              [selected]="ciudad.municipio === getMunicipio"
+              [value]="ciudad.municipio"
+            >
+              {{ ciudad.municipio | uppercase }}
+            </option>
+          </select>
+          <!-- input type="text" class="form-control" name="ciudad" id="field_ciudad" data-cy="ciudad" formControlName="ciudad" /-->
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_direccion">Direccion</label>
+          <input type="text" class="form-control" name="direccion" id="field_direccion" data-cy="direccion" formControlName="direccion" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

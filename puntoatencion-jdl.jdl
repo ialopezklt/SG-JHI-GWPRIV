@@ -1,0 +1,8 @@
+entity PuntoAtencion {
+
+	@Id puntoAtencionId Long
+    , departamento String
+    , ciudad String
+    , direccion String
+}
+paginate PuntoAtencion with pagination

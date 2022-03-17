@@ -29,6 +29,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'Parámetros' },
         loadChildren: () => import('./parametro/parametro.module').then(m => m.ParametroModule),
       },
+      {
+        path: 'punto-atencion',
+        data: { pageTitle: 'Puntos Atención' },
+        loadChildren: () => import('./punto-atencion/punto-atencion.module').then(m => m.PuntoAtencionModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

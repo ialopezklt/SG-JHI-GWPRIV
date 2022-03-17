@@ -50,7 +50,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
             >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <fa-icon icon="id-badge" [fixedWidth]="true"></fa-icon>
               <span>Rol</span>
             </a>
           </li>
@@ -62,8 +62,8 @@
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
             >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-              <span>Usuario</span>
+              <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+              <span>Usuarios</span>
             </a>
           </li>
           <li>
@@ -74,7 +74,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
             >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <fa-icon icon="file-alt" [fixedWidth]="true"></fa-icon>
               <span>Reporte rastreo Giro</span>
             </a>
           </li>
@@ -86,8 +86,20 @@
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
             >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <fa-icon icon="layer-group" [fixedWidth]="true"></fa-icon>
               <span>Grupo Parametro</span>
+            </a>
+          </li>
+          <li *jhiHasAnyAuthority="['ADMIN']">
+            <a
+              class="dropdown-item"
+              routerLink="punto-atencion"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="building" [fixedWidth]="true"></fa-icon>
+              <span>Puntos Atención</span>
             </a>
           </li>
           <li *jhiHasAnyAuthority="['ADMIN']">
@@ -98,7 +110,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
             >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
               <span>Parametro</span>
             </a>
           </li>
