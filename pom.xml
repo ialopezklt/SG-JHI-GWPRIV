@@ -953,9 +953,9 @@
 								</goals>
 								<configuration>
 									<target>
-										<echo message="*****************************************" level="warning" />
+										<echo message="***************************************************" level="warning" />
 										<echo message="***          MONTANDO PERFIL QA SuperGiros       **" level="warning"  />
-										<echo message="*****************************************"  level="warning" />
+										<echo message="***************************************************"  level="warning" />
 										<echo message="Build dir: ${project.build.directory}" level="warning" />
 									</target>
 								</configuration>
