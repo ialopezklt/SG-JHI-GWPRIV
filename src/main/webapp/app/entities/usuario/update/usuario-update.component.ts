@@ -174,6 +174,12 @@ export class UsuarioUpdateComponent implements OnInit {
       fechaCreacion: this.editForm.get(['fechaCreacion'])!.value
         ? dayjs(this.editForm.get(['fechaCreacion'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      inicioInactivacion: this.editForm.get(['inicioInactivacion'])!.value
+        ? dayjs(this.editForm.get(['inicioInactivacion'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      finInactivacion: this.editForm.get(['finInactivacion'])!.value
+        ? dayjs(this.editForm.get(['finInactivacion'])!.value, DATE_TIME_FORMAT)
+        : undefined,
       creadoPor: this.editForm.get(['creadoPor'])!.value,
     };
   }
@@ -182,12 +188,9 @@ export class UsuarioUpdateComponent implements OnInit {
       ultimoIngreso: this.editForm.get(['ultimoIngreso'])!.value
         ? dayjs(this.editForm.get(['ultimoIngreso'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      inicioInactivacion: this.editForm.get(['inicioInactivacion'])!.value
-        ? dayjs(this.editForm.get(['inicioInactivacion'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      finInactivacion: this.editForm.get(['finInactivacion'])!.value
-        ? dayjs(this.editForm.get(['finInactivacion'])!.value, DATE_TIME_FORMAT)
-        : undefined,
+IAL:
 
+      inicioInactivacion: this.editForm.get(['inicioInactivacion'])!.value,
+      finInactivacion: this.editForm.get(['finInactivacion'])!.value,
 */
 }
