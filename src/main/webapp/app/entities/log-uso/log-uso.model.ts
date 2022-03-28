@@ -11,6 +11,7 @@ export interface ILogUso {
   pin?: string | null;
   clienteSospechoso?: string | null;
   datosAnteriores?: string | null;
+  nombreCompleto?: string | null;
 }
 
 export class LogUso implements ILogUso {
@@ -23,7 +24,8 @@ export class LogUso implements ILogUso {
     public numeroDocumento?: string | null,
     public pin?: string | null,
     public clienteSospechoso?: string | null,
-    public datosAnteriores?: string | null
+    public datosAnteriores?: string | null,
+    public nombreCompleto?: string | null
   ) {}
 }
 
