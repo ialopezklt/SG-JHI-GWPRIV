@@ -44,6 +44,8 @@ import {
   faIdBadge,
   faFileAlt,
   faLayerGroup,
+  faBarcode,
+  faIdCard,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -93,5 +95,7 @@ export const fontAwesomeIcons = [
   faIdBadge,
   faFileAlt,
   faLayerGroup,
+  faBarcode,
+  faIdCard,
   // jhipster-needle-add-icon-import
 ];

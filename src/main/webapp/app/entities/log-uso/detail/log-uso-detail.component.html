@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <div *ngIf="logUso">
-      <h2 data-cy="logUsoDetailsHeading"><span>Log Uso</span></h2>
+      <h2 data-cy="logUsoDetailsHeading"><span>Detalle Log</span></h2>
 
       <hr />
 
@@ -40,16 +40,16 @@
         </dd>
         <dt><span>Cliente Sospechoso</span></dt>
         <dd>
-          <span>{{ logUso.clienteSospechoso }}</span>
+          <span>{{ logUso.clienteSospechoso === 'S' ? 'Si' : 'No' }}</span>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Regresar</span>
       </button>
 
       <button *ngIf="false" type="button" [routerLink]="['/log-uso', logUso!.logUsoId, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
       </button>
     </div>
   </div>

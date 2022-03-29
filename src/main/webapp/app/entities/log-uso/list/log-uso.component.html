@@ -6,9 +6,12 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-  <div class="container">
-    <div class="row">
-      <div class="col-4">
+  <div>
+    <div class="row pt-3">
+      <h3>Criterios de búsqueda</h3>
+    </div>
+    <div class="row pt-3">
+      <div class="col-sm-12 col-md-6 col-lg-3">
         <!-- FECHA DE INICIO -->
         <label for="txtFechaInicio">Fecha Inicio </label><br />
         <div class="input-group">
@@ -26,7 +29,7 @@
           </button>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-sm-12 col-md-6 col-lg-3">
         <label for="txtFechaInicio">Fecha Fin </label><br />
         <div class="input-group">
           <!--  FECHA DE FIN -->
@@ -45,17 +48,22 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-3">
-        <label for="txtPin">PIN</label><br />
+    <div class="row pt-3">
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <fa-icon icon="barcode"></fa-icon>
+        <label for="txtPin">PIN</label>
         <input type="tel" id="txtPin" [(ngModel)]="parPin" />
       </div>
-      <div class="col-3">
-        <label for="txtId">Número de identificación</label>
-        <input type="text" id="txtId" size="20" [(ngModel)]="parNumeroIdentificacion" />
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <fa-icon icon="id-card"></fa-icon>
+        <label for="txtId">
+          <span>Número de identificación</span>
+        </label>
+        <input type="text" id="txtId" style="vertical-align: top" size="20" [(ngModel)]="parNumeroIdentificacion" />
       </div>
-      <div class="col-3">
-        Cliente sospechoso<br />
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <img src="../../../../content/images/avatar-desconocido.svg" width="30px" />
+        Cliente sospechoso&nbsp;&nbsp;
         <div class="form-check form-check-inline">
           <input
             type="radio"
@@ -80,13 +88,9 @@
           <label for="rbClienteSospechoso">No</label>
         </div>
       </div>
-      <div class="col-3" style="text-align: end">
-        <div class="form-check form-check-inline">
-          <button id="btnExportar" *ngIf="logUsos?.length! > 0" class="btn btn-primary" (click)="exportarExcel()">
-            <fa-icon icon="file-excel"></fa-icon>
-            <span>Exportar</span>
-          </button>
-        </div>
+    </div>
+    <div class="row pt-3 text-center pb-3">
+      <div class="col-12 text-center">
         <!--button
             id="jh-create-entity"
             data-cy="entityCreateButton"
@@ -97,9 +101,15 @@
             <span> Create a new Log Uso </span>
           </button-->
         <div class="justify-content-end form-check form-check-inline">
-          <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+          <button class="btn btn-primary mr-2" (click)="loadAll()" [disabled]="isLoading">
             <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-            <span>Recargar Lista</span>
+            <span>Buscar</span>
+          </button>
+        </div>
+        <div class="form-check form-check-inline">
+          <button id="btnExportar" *ngIf="logUsos?.length! > 0" class="btn btn-success" (click)="exportarExcel()">
+            <fa-icon icon="file-excel"></fa-icon>
+            <span>Exportar</span>
           </button>
         </div>
       </div>
@@ -113,7 +123,7 @@
   <div class="table-responsive" id="entities" *ngIf="logUsos && logUsos.length > 0">
     <table id="tab_logs" class="table table-striped hover" aria-describedby="page-heading">
       <thead>
-        <tr>
+        <tr class="color-botones">
           <th scope="col" *ngIf="false"><span>Log Id</span></th>
           <th scope="col"><span>Tipo de acción</span></th>
           <th scope="col"><span>Pin</span></th>
@@ -121,6 +131,11 @@
           <th scope="col"><span>Número de identificación</span></th>
           <th scope="col"><span>Nombre Completo</span></th>
           <th scope="col"><span>Fecha de acción</span></th>
+          <th scope="col"><span>Hora de acción</span></th>
+          <th scope="col"><span>¿Acepta TyC?</span></th>
+          <th scope="col">
+            <span>¿Acepta Tratamiento<br />de datos?</span>
+          </th>
           <th scope="col"><span>Cliente Sospechoso</span></th>
           <th scope="col" *ngIf="columnaNoExportar"></th>
         </tr>
@@ -131,12 +146,15 @@
             <a [routerLink]="['/log-uso', logUso.logUsoId, 'view']">{{ logUso.logUsoId }}</a>
           </td>
           <td>{{ logUso.opcion }}</td>
-          <td>{{ logUso.pin }}</td>
+          <td>{{ logUso.pin === null ? 'N/A' : logUso.pin }}</td>
           <td>{{ logUso.tipoDocumento }}</td>
           <td>{{ logUso.numeroDocumento }}</td>
           <td>{{ logUso.nombreCompleto }}</td>
-          <td>{{ logUso.fechaHora | formatMediumDatetime }}</td>
-          <td>{{ logUso.clienteSospechoso }}</td>
+          <td>{{ logUso.fechaHora | formatMediumDate }}</td>
+          <td>{{ logUso.fechaHora | formatMediumOnlyTime }}</td>
+          <td>Si</td>
+          <td>Si</td>
+          <td>{{ logUso.clienteSospechoso === 'S' ? 'Si' : 'No' }}</td>
           <td *ngIf="columnaNoExportar" class="text-right">
             <div class="btn-group">
               <button

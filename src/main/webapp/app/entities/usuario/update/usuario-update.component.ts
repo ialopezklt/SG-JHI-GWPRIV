@@ -188,9 +188,5 @@ export class UsuarioUpdateComponent implements OnInit {
       ultimoIngreso: this.editForm.get(['ultimoIngreso'])!.value
         ? dayjs(this.editForm.get(['ultimoIngreso'])!.value, DATE_TIME_FORMAT)
         : undefined,
-IAL:
-
-      inicioInactivacion: this.editForm.get(['inicioInactivacion'])!.value,
-      finInactivacion: this.editForm.get(['finInactivacion'])!.value,
 */
 }

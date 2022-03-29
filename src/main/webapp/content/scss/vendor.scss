@@ -10,3 +10,31 @@ eg $input-color: red;
 @import '~bootstrap/scss/bootstrap';
 
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
+.background-formularios {
+  background-color: #f6f6f7;
+  color: black;
+}
+label {
+  color: #002a87;
+  font-weight: 500;
+}
+.color-label {
+  color: #002a87;
+}
+.color-botones {
+  background-color: #002a87;
+  color: white;
+}
+.color-botones:hover {
+  background-color: #002a87;
+  font-weight: 600;
+  color: white;
+}
+h2 {
+  color: #002a87;
+  font-weight: 500;
+}
+h3 {
+  color: #002a87;
+  font-weight: bold;
+}
