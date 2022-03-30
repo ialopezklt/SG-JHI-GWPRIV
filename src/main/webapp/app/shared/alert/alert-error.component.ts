@@ -28,7 +28,7 @@ export class AlertErrorComponent implements OnDestroy {
         switch (httpErrorResponse.status) {
           // connection refused, server not reachable
           case 0:
-            this.addErrorAlert('Server not reachable');
+            this.addErrorAlert('Servidor no disponible');
             break;
 
           case 400: {
@@ -61,7 +61,7 @@ export class AlertErrorComponent implements OnDestroy {
           }
 
           case 404:
-            this.addErrorAlert('Not found');
+            this.addErrorAlert('404-La página no está disponible en el momento');
             break;
 
           default:

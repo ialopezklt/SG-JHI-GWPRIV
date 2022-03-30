@@ -28,7 +28,7 @@
             id="field_nombre"
             data-cy="nombre"
             formControlName="nombre"
-            readonly="#idrol === 1 | #idrol === 2 | #idrol === 3 | #idrol === 4 "
+            (readonly)="(campoNombreReadOnly)"
           />
           <div *ngIf="editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> This field is required. </small>
@@ -60,7 +60,7 @@
         </button -->
 
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Regresar</span>
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Regresar</span>
         </button>
 
         <button

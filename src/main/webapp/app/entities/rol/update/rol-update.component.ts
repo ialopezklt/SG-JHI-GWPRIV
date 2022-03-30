@@ -22,6 +22,7 @@ export class RolUpdateComponent implements OnInit {
   usuariosSharedCollection: IUsuario[] = [];
   usuarioAAdcionalAlRol!: IUsuario;
   mensajeResultadoBusqueda = '';
+  campoNombreReadOnly = true;
 
   editForm = this.fb.group({
     rolId: [],
@@ -126,7 +127,12 @@ export class RolUpdateComponent implements OnInit {
 
   protected updateForm(rol: IRol): void {
     if (rol.rolId === undefined) {
+      this.campoNombreReadOnly = false;
       rol.activo = 'S';
+    } else {
+      if (rol.rolId >= 1 && rol.rolId <= 3) {
+        this.campoNombreReadOnly = true;
+      }
     }
 
     this.editForm.patchValue({
