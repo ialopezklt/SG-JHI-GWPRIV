@@ -66,7 +66,7 @@ class SecurityUtilsUnitTest {
             new UsernamePasswordAuthenticationToken("admin", "admin", authorities)
         );
         Boolean hasCurrentUserThisAuthority = SecurityUtils
-            .hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)
+            .hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN, AuthoritiesConstants.ADMIN_TI)
             .contextWrite(context)
             .block();
         assertThat(hasCurrentUserThisAuthority).isTrue();

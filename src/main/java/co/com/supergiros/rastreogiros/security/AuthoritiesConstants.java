@@ -7,6 +7,8 @@ public final class AuthoritiesConstants {
 
     public static final String ADMIN = "ADMIN";
 
+    public static final String ADMIN_TI = "ADMIN-TI";
+
     public static final String USER = "PUBLICO";
 
     public static final String GESTOR = "GESTOR";

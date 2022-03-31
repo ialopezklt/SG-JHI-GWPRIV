@@ -80,7 +80,7 @@ management:
   endpoint:
     health:
       show-details: when_authorized
-      roles: 'ROLE_ADMIN'
+      roles: 'ADMIN-TI'
       probes:
         enabled: true
       group:
@@ -169,6 +169,7 @@ spring:
       roles:
         - ADMIN
         - USER
+        - ADMIN_TI
   task:
     execution:
       thread-name-prefix: gw-privado-rastreo-giros-task-

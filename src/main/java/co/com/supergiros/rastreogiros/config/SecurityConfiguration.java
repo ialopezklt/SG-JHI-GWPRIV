@@ -95,18 +95,19 @@ public class SecurityConfiguration {
             .pathMatchers("/*.*").permitAll()
             .pathMatchers("/services/*/api/authenticate", "/services/*/api/account", "/services/*/api/**").permitAll()
             .pathMatchers("/api/auth-info").permitAll()
-            .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .pathMatchers("/api/**").authenticated()
+            .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN_TI)
+            .pathMatchers("/api/**").permitAll()
             // microfrontend resources are loaded by webpack without authentication, they need to be public
             .pathMatchers("/services/*/*.js").permitAll()
             .pathMatchers("/services/*/*.js.map").permitAll()
-            .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
+            .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN_TI)
             .pathMatchers("/services/**").authenticated()
             .pathMatchers("/management/health").permitAll()
             .pathMatchers("/management/health/**").permitAll()
             .pathMatchers("/management/info").permitAll()
             .pathMatchers("/management/prometheus").permitAll()
-            .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
+            .pathMatchers("/management/**").permitAll();
+        //            .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN_TI);
         // @formatter:on
         return http.build();
     }

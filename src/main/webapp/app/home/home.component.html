@@ -10,7 +10,7 @@
     <h1 class="display-4"><span>Bienvenido!</span> <br />Sistema administrativo de Rastreo Giros</h1>
 
     <div *ngIf="account !== null" style="position: absolute; top: 10; left: 10">
-      <div class="alert alert-success" *ngSwitchCase="true">
+      <div class="alert alert-success">
         <span id="home-logged-message" *ngIf="account">Autenticado como "{{ account.login }}".</span>
       </div>
     </div>
