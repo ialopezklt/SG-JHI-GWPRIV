@@ -6,92 +6,106 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-  <div>
-    <div class="row pt-3">
-      <h3>Criterios de búsqueda</h3>
-    </div>
-    <div class="row pt-3">
-      <div class="col-sm-12 col-md-6 col-lg-3">
-        <!-- FECHA DE INICIO -->
-        <label for="txtFechaInicio">Fecha Inicio </label><br />
-        <div class="input-group">
-          <input
-            id="txtFechaInicio"
-            placeholder="yyyy-mm-dd"
-            type="text"
-            class="form-control"
-            ngbDatepicker
-            #d="ngbDatepicker"
-            (dateSelect)="onDateSelectF1($event)"
-          />
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-            <fa-icon icon="calendar-day"></fa-icon>
-          </button>
+  <form>
+    <div>
+      <div class="row pt-3">
+        <h3>Criterios de búsqueda</h3>
+      </div>
+      <div class="row pt-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <!-- FECHA DE INICIO -->
+          <label for="txtFechaInicio">Fecha Inicio </label><br />
+          <div class="input-group">
+            <input
+              #txtFechaInicio
+              id="txtFechaInicio"
+              name="txtFechaInicio"
+              placeholder="yyyy-mm-dd"
+              class="form-control"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              [value]="formatter.format(parFechaIni!)"
+              (input)="parFechaIni = validateInput(parFechaIni, txtFechaInicio.value)"
+              (dateSelect)="onDateSelectF1($event)"
+            />
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+              <fa-icon icon="calendar-day"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <label for="txtFechaInicio">Fecha Fin </label><br />
+          <div class="input-group">
+            <!--  FECHA DE FIN -->
+            <input
+              #txtFechaFin
+              id="txtFechaFin"
+              name="txtFechaFin"
+              placeholder="yyyy-mm-dd"
+              class="form-control"
+              ngbDatepicker
+              #e="ngbDatepicker"
+              [value]="formatter.format(parFechaFin!)"
+              (input)="parFechaFin = validateInput(parFechaFin, txtFechaFin.value)"
+              (dateSelect)="onDateSelectF2($event)"
+            />
+            <!--          (dateSelect)="onDateSelectF2($event)"
+-->
+            <button class="btn btn-outline-secondary calendar" (click)="e.toggle()" type="button">
+              <fa-icon icon="calendar-day"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3 bg-warning mx-2" style="align-self: self-end">
+          <!-- MENSAJES DE ERROR DE FECHAS -->
+          <span *ngIf="mostrarMensajeFechas">La fecha final debe ser superior a la fecha inicial</span>
+          <span *ngIf="mostrarMensajeSospechosoFechas">Al seleccionar Cliente Sospechoso, debes seleccionar al menos fecha de inicio</span>
         </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-3">
-        <label for="txtFechaInicio">Fecha Fin </label><br />
-        <div class="input-group">
-          <!--  FECHA DE FIN -->
-          <input
-            id="txtFechaFin"
-            type="text"
-            placeholder="yyyy-mm-dd"
-            class="form-control"
-            ngbDatepicker
-            #e="ngbDatepicker"
-            (dateSelect)="onDateSelectF2($event)"
-          />
-          <button class="btn btn-outline-secondary calendar" (click)="e.toggle()" type="button">
-            <fa-icon icon="calendar-day"></fa-icon>
-          </button>
+      <div class="row pt-3">
+        <div class="col-sm-12 col-md-4 col-lg-4">
+          <fa-icon icon="barcode"></fa-icon>
+          <label for="txtPin">PIN</label>
+          <input type="tel" id="txtPin" name="txtPin" [(ngModel)]="parPin" />
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+          <fa-icon icon="id-card"></fa-icon>
+          <label for="txtId">
+            <span>Número de identificación</span>
+          </label>
+          <input type="text" id="txtId" name="txtId" style="vertical-align: top" size="20" [(ngModel)]="parNumeroIdentificacion" />
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+          <img src="../../../../content/images/avatar-desconocido.svg" width="30px" />
+          Cliente sospechoso&nbsp;&nbsp;
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              id="tbClienteSospechosoSi"
+              mdbRadio
+              class="form-check-input"
+              name="flexRadioDefault"
+              value="S"
+              [(ngModel)]="parClienteSospechoso"
+            />
+            <label for="rbClienteSospechoso">Si</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              id="tbClienteSospechosoNo"
+              class="form-check-input"
+              name="flexRadioDefault"
+              value="N"
+              [(ngModel)]="parClienteSospechoso"
+            />
+            <label for="rbClienteSospechoso">No</label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row pt-3">
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <fa-icon icon="barcode"></fa-icon>
-        <label for="txtPin">PIN</label>
-        <input type="tel" id="txtPin" [(ngModel)]="parPin" />
-      </div>
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <fa-icon icon="id-card"></fa-icon>
-        <label for="txtId">
-          <span>Número de identificación</span>
-        </label>
-        <input type="text" id="txtId" style="vertical-align: top" size="20" [(ngModel)]="parNumeroIdentificacion" />
-      </div>
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <img src="../../../../content/images/avatar-desconocido.svg" width="30px" />
-        Cliente sospechoso&nbsp;&nbsp;
-        <div class="form-check form-check-inline">
-          <input
-            type="radio"
-            id="tbClienteSospechosoSi"
-            mdbRadio
-            class="form-check-input"
-            name="flexRadioDefault"
-            value="S"
-            [(ngModel)]="parClienteSospechoso"
-          />
-          <label for="rbClienteSospechoso">Si</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            type="radio"
-            id="tbClienteSospechosoNo"
-            class="form-check-input"
-            name="flexRadioDefault"
-            value="N"
-            [(ngModel)]="parClienteSospechoso"
-          />
-          <label for="rbClienteSospechoso">No</label>
-        </div>
-      </div>
-    </div>
-    <div class="row pt-3 text-center pb-3">
-      <div class="col-12 text-center">
-        <!--button
+      <div class="row pt-3 text-center pb-3">
+        <div class="col-12 text-center">
+          <!--button
             id="jh-create-entity"
             data-cy="entityCreateButton"
             class="btn btn-primary jh-create-entity create-log-uso"
@@ -100,21 +114,22 @@
             <fa-icon icon="plus"></fa-icon>
             <span> Create a new Log Uso </span>
           </button-->
-        <div class="justify-content-end form-check form-check-inline">
-          <button class="btn btn-primary mr-2" (click)="loadAll()" [disabled]="isLoading">
-            <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-            <span>Buscar</span>
-          </button>
-        </div>
-        <div class="form-check form-check-inline">
-          <button id="btnExportar" *ngIf="logUsos?.length! > 0" class="btn btn-success" (click)="exportarExcel()">
-            <fa-icon icon="file-excel"></fa-icon>
-            <span>Exportar</span>
-          </button>
+          <div class="justify-content-end form-check form-check-inline">
+            <button class="btn btn-primary mr-2" (click)="loadAll()" [disabled]="isLoading">
+              <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              <span>Buscar</span>
+            </button>
+          </div>
+          <div class="form-check form-check-inline">
+            <button id="btnExportar" *ngIf="logUsos?.length! > 0" class="btn btn-success" (click)="exportarExcel()">
+              <fa-icon icon="file-excel"></fa-icon>
+              <span>Exportar</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <div class="alert alert-warning" id="no-result" *ngIf="logUsos?.length === 0">
     <span>No hay registros seleccionados</span>

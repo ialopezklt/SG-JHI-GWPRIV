@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { NgbCalendar, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbModal, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 import { ILogUso } from '../log-uso.model';
 import { LogUsoService } from '../service/log-uso.service';
@@ -13,30 +13,66 @@ import * as XLSX from 'xlsx';
   templateUrl: './log-uso.component.html',
 })
 export class LogUsoComponent implements OnInit {
-  dtOptions: DataTables.Settings = {};
   logUsos?: ILogUso[];
   isLoading = false;
-  parFechaIni: NgbDateStruct;
-  parFechaFin: NgbDateStruct;
+  parFechaIni: NgbDate | null;
+  parFechaFin: NgbDate | null;
   parPin = '';
   parNumeroIdentificacion = '';
   parClienteSospechoso = '';
   fileName = 'log-uso-rastreo-giros.xlsx';
   columnaNoExportar = true;
+  mostrarMensajeFechas: boolean;
+  mostrarMensajeSospechosoFechas: boolean;
+  fecha1 = '';
+  fecha2 = '';
 
-  constructor(protected logUsoService: LogUsoService, protected modalService: NgbModal, private calendar: NgbCalendar) {
+  constructor(
+    protected logUsoService: LogUsoService,
+    protected modalService: NgbModal,
+    protected calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter
+  ) {
     this.parFechaIni = this.calendar.getToday();
-    console.log(this.parFechaIni);
     this.parFechaFin = this.calendar.getToday();
+    this.mostrarMensajeFechas = false;
+    this.mostrarMensajeSospechosoFechas = false;
+  }
+
+  ngOnInit(): void {
+    this.parFechaIni = this.calendar.getToday();
+    this.parFechaFin = this.calendar.getToday();
+    this.fecha1 = this.fechaToString(this.parFechaIni);
+    this.fecha2 = this.fechaToString(this.parFechaFin);
+    this.parPin = '';
+    this.parNumeroIdentificacion = '';
+    this.parClienteSospechoso = '';
+    this.loadAll();
   }
 
   loadAll(): void {
-    const fecha1 = this.parFechaIni.year.toString() + '-' + this.parFechaIni.month.toString() + '-' + this.parFechaIni.day.toString();
-    const fecha2 = this.parFechaFin.year.toString() + '-' + this.parFechaFin.month.toString() + '-' + this.parFechaFin.day.toString();
+    this.fecha1 = this.fechaToString(this.parFechaIni);
+    this.fecha2 = this.fechaToString(this.parFechaFin);
+
+    if (this.parFechaFin !== null) {
+      if (this.parFechaFin.before(this.parFechaIni)) {
+        this.mostrarMensajeFechas = true;
+        return;
+      } else {
+        this.mostrarMensajeFechas = false;
+      }
+    }
+
+    if (this.parFechaIni === null && this.parClienteSospechoso !== '') {
+      this.mostrarMensajeSospechosoFechas = true;
+      return;
+    } else {
+      this.mostrarMensajeSospechosoFechas = false;
+    }
     this.isLoading = true;
     const criterios = {
-      fechaIni: fecha1,
-      fechaFin: fecha2,
+      fechaIni: this.fecha1,
+      fechaFin: this.fecha2,
       pin: this.parPin,
       numeroIdentificacion: this.parNumeroIdentificacion,
       clienteSospechoso: this.parClienteSospechoso,
@@ -44,7 +80,6 @@ export class LogUsoComponent implements OnInit {
 
     this.logUsoService.queryCriteria(criterios).subscribe({
       next: (res: HttpResponse<ILogUso[]>) => {
-        console.log('obtuvo respuesta');
         this.isLoading = false;
         this.logUsos = res.body ?? [];
       },
@@ -54,34 +89,61 @@ export class LogUsoComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.parPin = '';
-    this.parNumeroIdentificacion = '';
-    this.parClienteSospechoso = '';
-    this.loadAll();
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    if (input === '') {
+      return null;
+    }
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  fechaToString(fecha: NgbDate | null): string {
+    if (fecha === null) {
+      return '';
+    }
+    return (
+      fecha.year.toString() +
+      '-' +
+      ('0' + fecha.month.toString()).substring(('0' + fecha.month.toString()).length - 2) +
+      '-' +
+      ('0' + fecha.day.toString()).substring(('0' + fecha.day.toString()).length - 2)
+    );
   }
 
   exportarExcel(): void {
+    const jsonFiltrado: any[] = [];
+    let filaFiltrada: FilaExcel = new FilaExcel();
+    this.logUsos?.forEach(reg => {
+      filaFiltrada = new FilaExcel();
+      filaFiltrada.tipoAccion = reg.opcion!;
+      filaFiltrada.pin = reg.pin!;
+      filaFiltrada.tipoDocumento = reg.tipoDocumento!;
+      filaFiltrada.numeroId = reg.numeroDocumento!;
+      filaFiltrada.nombre = reg.nombreCompleto!;
+      filaFiltrada.fecha = reg.fechaHora!.format('DD/MM/YYYY');
+      filaFiltrada.hora = reg.fechaHora!.format('HH:mm');
+      filaFiltrada.sospechoso = reg.clienteSospechoso === 'S' ? 'Si' : 'No';
+      jsonFiltrado.push(filaFiltrada);
+    });
     this.columnaNoExportar = false;
-    //* table id is passed over here */
-    const element = document.getElementById('tab_logs');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(jsonFiltrado);
 
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
 
     this.columnaNoExportar = true;
     /* save to file */
     XLSX.writeFile(wb, this.fileName);
   }
 
-  onDateSelectF1(evento: any): void {
-    this.parFechaIni = evento;
+  onDateSelectF1(fec1: NgbDate): void {
+    this.parFechaIni = fec1;
   }
 
-  onDateSelectF2(evento: any): void {
-    this.parFechaFin = evento;
+  onDateSelectF2(fec2: NgbDate): void {
+    this.parFechaFin = fec2;
   }
 
   trackLogUsoId(index: number, item: ILogUso): number {
@@ -98,4 +160,15 @@ export class LogUsoComponent implements OnInit {
       }
     });
   }
+}
+
+class FilaExcel {
+  tipoAccion?: string;
+  pin?: string;
+  tipoDocumento?: string;
+  numeroId?: string;
+  nombre?: string;
+  fecha?: string;
+  hora?: string;
+  sospechoso?: string;
 }
