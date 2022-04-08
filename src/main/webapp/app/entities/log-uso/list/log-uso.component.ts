@@ -61,6 +61,8 @@ export class LogUsoComponent implements OnInit {
       } else {
         this.mostrarMensajeFechas = false;
       }
+    } else {
+      this.mostrarMensajeFechas = false;
     }
 
     if (this.parFechaIni === null && this.parClienteSospechoso !== '') {
