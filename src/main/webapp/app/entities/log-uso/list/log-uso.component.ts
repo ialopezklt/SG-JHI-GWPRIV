@@ -8,12 +8,15 @@ import { LogUsoDeleteDialogComponent } from '../delete/log-uso-delete-dialog.com
 
 import * as XLSX from 'xlsx';
 
+const FILTER_PAG_REGEX = /[^0-9]/g;
+
 @Component({
   selector: 'jhi-log-uso',
   templateUrl: './log-uso.component.html',
 })
 export class LogUsoComponent implements OnInit {
   logUsos?: ILogUso[];
+  listadoTotal?: ILogUso[];
   isLoading = false;
   parFechaIni: NgbDate | null;
   parFechaFin: NgbDate | null;
@@ -26,6 +29,9 @@ export class LogUsoComponent implements OnInit {
   mostrarMensajeSospechosoFechas: boolean;
   fecha1 = '';
   fecha2 = '';
+  page = 1;
+  pageSize = 20;
+  collectionSize = 0;
 
   constructor(
     protected logUsoService: LogUsoService,
@@ -83,7 +89,9 @@ export class LogUsoComponent implements OnInit {
     this.logUsoService.queryCriteria(criterios).subscribe({
       next: (res: HttpResponse<ILogUso[]>) => {
         this.isLoading = false;
-        this.logUsos = res.body ?? [];
+        this.listadoTotal = res.body ?? [];
+        this.collectionSize = this.listadoTotal.length;
+        this.cargarItemsPagina();
       },
       error: () => {
         this.isLoading = false;
@@ -115,7 +123,7 @@ export class LogUsoComponent implements OnInit {
   exportarExcel(): void {
     const jsonFiltrado: any[] = [];
     let filaFiltrada: FilaExcel = new FilaExcel();
-    this.logUsos?.forEach(reg => {
+    this.listadoTotal?.forEach(reg => {
       filaFiltrada = new FilaExcel();
       filaFiltrada.tipoAccion = reg.opcion!;
       filaFiltrada.pin = reg.pin!;
@@ -161,6 +169,19 @@ export class LogUsoComponent implements OnInit {
         this.loadAll();
       }
     });
+  }
+
+  cargarItemsPagina(): void {
+    this.logUsos = this.listadoTotal!.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  selectPage(page: string): void {
+    this.page = parseInt(page, 10) || 1;
+    this.cargarItemsPagina();
+  }
+
+  formatInput(input: HTMLInputElement): void {
+    input.value = input.value.replace(FILTER_PAG_REGEX, '');
   }
 }
 

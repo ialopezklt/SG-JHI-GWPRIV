@@ -202,4 +202,44 @@
       </tbody>
     </table>
   </div>
+  <!-- PAgination: -->
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="collectionSize"
+      [(page)]="page"
+      [boundaryLinks]="true"
+      [pageSize]="pageSize"
+      (pageChange)="cargarItemsPagina()"
+    >
+      <ng-template ngbPaginationPages let-page let-pages="pages">
+        <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+          <div class="mb-3 d-flex flex-nowrap px-2">
+            <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Pág.</label>
+            <input
+              #i
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              class="form-control custom-pages-input"
+              id="paginationInput"
+              [value]="page"
+              (keyup.enter)="selectPage(i.value)"
+              (blur)="selectPage(i.value)"
+              (input)="formatInput($any($event).target)"
+              aria-labelledby="paginationInputLabel paginationDescription"
+              style="width: 5.5rem"
+            />
+            <span id="paginationDescription" class="col-form-label text-nowrap px-2"> de {{ pages.length }}</span>
+          </div>
+        </li>
+      </ng-template>
+    </ngb-pagination>
+
+    <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="cargarItemsPagina()">
+      <option [ngValue]="10">10 items por pág.</option>
+      <option [ngValue]="20">20 items por pág.</option>
+      <option [ngValue]="60">60 items por pág.</option>
+    </select>
+  </div>
 </div>
