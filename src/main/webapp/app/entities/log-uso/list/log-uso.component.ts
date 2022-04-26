@@ -131,7 +131,7 @@ export class LogUsoComponent implements OnInit {
       filaFiltrada.numeroId = reg.numeroDocumento!;
       filaFiltrada.nombre = reg.nombreCompleto!;
       filaFiltrada.fecha = reg.fechaHora!.format('DD/MM/YYYY');
-      filaFiltrada.hora = reg.fechaHora!.format('HH:mm');
+      filaFiltrada.hora = reg.fechaHora?.format('HH:mm');
       filaFiltrada.sospechoso = reg.clienteSospechoso === 'S' ? 'Si' : 'No';
       jsonFiltrado.push(filaFiltrada);
     });

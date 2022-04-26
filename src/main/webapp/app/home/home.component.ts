@@ -13,6 +13,7 @@ import { Account } from 'app/core/auth/account.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  gitTime = '';
 
   private readonly destroy$ = new Subject<void>();
 
