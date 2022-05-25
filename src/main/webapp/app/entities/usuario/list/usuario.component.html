@@ -64,8 +64,8 @@
           <td>{{ usuario.activo }}</td>
           <td>{{ usuario.correo }}</td>
           <td>{{ usuario.celular }}</td>
-          <td>{{ usuario.tipoDocumento }}</td>
-          <td>{{ usuario.numeroDocumento }}</td>
+          <td>{{ usuario.tipoUsuario === tipoUsuario.Externo ? usuario.tipoDocumento : 'N/A' }}</td>
+          <td>{{ usuario.tipoUsuario === tipoUsuario.Externo ? usuario.numeroDocumento : 'N/A' }}</td>
           <td>{{ usuario.primerNombre }}</td>
           <td>{{ usuario.segundoNombre }}</td>
           <td>{{ usuario.primerApellido }}</td>

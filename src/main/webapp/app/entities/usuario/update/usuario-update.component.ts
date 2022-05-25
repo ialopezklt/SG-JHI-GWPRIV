@@ -12,6 +12,7 @@ import { IUsuario, Usuario } from '../usuario.model';
 import { UsuarioService } from '../service/usuario.service';
 import { TipoUsuario } from 'app/entities/enumerations/tipo-usuario.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { TipoDocumento } from 'app/entities/enumerations/tipo-documento.model';
 
 @Component({
   selector: 'jhi-usuario-update',
@@ -44,8 +45,8 @@ export class UsuarioUpdateComponent implements OnInit {
     activo: [true, [Validators.required]],
     correo: [null, [Validators.required, Validators.minLength(6)]],
     celular: [null, [Validators.min(3000000000), Validators.max(3900000000)]],
-    tipoDocumento: [null, [Validators.required]],
-    numeroDocumento: [null, [Validators.required]],
+    tipoDocumento: [null, []],
+    numeroDocumento: [null, []],
     primerNombre: [null, [Validators.required]],
     segundoNombre: [],
     primerApellido: [null, [Validators.required]],
@@ -79,8 +80,6 @@ export class UsuarioUpdateComponent implements OnInit {
         usuario.fechaCreacion = today;
 
         this.estadoPantalla = 'creacion';
-        console.log('cuenta sesion:');
-        console.log(this.usuarioLogueado);
         usuario.creadoPor = this.usuarioLogueado;
         usuario.tipoUsuario = 'Interno';
         const fecha = new Date();
@@ -100,6 +99,8 @@ export class UsuarioUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const usuario = this.createFromForm();
+    usuario.tipoDocumento = usuario.tipoDocumento === undefined ? TipoDocumento.CedulaCiudadania : usuario.tipoDocumento;
+    usuario.numeroDocumento = usuario.numeroDocumento === undefined ? usuario.username : usuario.numeroDocumento;
     console.log(usuario);
     if (usuario.usuarioId !== undefined) {
       this.subscribeToSaveResponse(this.usuarioService.update(usuario));

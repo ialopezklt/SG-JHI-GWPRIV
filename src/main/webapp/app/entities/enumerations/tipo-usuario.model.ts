@@ -1,7 +1,7 @@
 export enum TipoUsuario {
-  Interno = 'I',
+  Interno = 'Interno',
 
-  Externo = 'E',
+  Externo = 'Externo',
 
-  Dual = 'D',
+  Dual = 'Dual',
 }

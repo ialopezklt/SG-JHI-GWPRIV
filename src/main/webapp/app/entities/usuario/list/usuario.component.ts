@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IUsuario } from '../usuario.model';
 import { UsuarioService } from '../service/usuario.service';
 import { UsuarioDeleteDialogComponent } from '../delete/usuario-delete-dialog.component';
+import { TipoUsuario } from 'app/entities/enumerations/tipo-usuario.model';
 
 @Component({
   selector: 'jhi-usuario',
@@ -47,5 +48,9 @@ export class UsuarioComponent implements OnInit {
         this.loadAll();
       }
     });
+  }
+
+  public get tipoUsuario(): typeof TipoUsuario {
+    return TipoUsuario;
   }
 }

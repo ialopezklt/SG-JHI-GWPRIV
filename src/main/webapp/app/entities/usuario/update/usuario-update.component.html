@@ -105,7 +105,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="tipoUsuarioEnFormulario === 'Externo'">
           <label class="form-control-label" for="field_tipoDocumento">Tipo Documento</label>
           <select
             class="form-control"
@@ -113,6 +113,7 @@
             formControlName="tipoDocumento"
             id="field_tipoDocumento"
             data-cy="tipoDocumento"
+            [required]="tipoUsuarioEnFormulario === 'Externo'"
           >
             <option [ngValue]="null"></option>
             <option *ngFor="let tipoDocumento of tipoDocumentoValues" [value]="tipoDocumento.key" se>{{ tipoDocumento.value }}</option>
@@ -126,7 +127,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="tipoUsuarioEnFormulario === 'Externo'">
           <label class="form-control-label" for="field_numeroDocumento">Número Documento</label>
           <input
             type="text"
@@ -135,6 +136,7 @@
             id="field_numeroDocumento"
             data-cy="numeroDocumento"
             formControlName="numeroDocumento"
+            [required]="tipoUsuarioEnFormulario === 'Externo'"
           />
           <div
             *ngIf="

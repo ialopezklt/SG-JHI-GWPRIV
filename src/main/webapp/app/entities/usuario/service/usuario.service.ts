@@ -18,6 +18,11 @@ export class UsuarioService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
+  existeUsuario(usuario: IUsuario): Observable<boolean> {
+    const urlDestino = this.applicationConfigService.getEndpointFor('api/publico/', 'backrastreogiros');
+    return this.http.post<boolean>(urlDestino + 'existeusuario', usuario, { observe: 'body' });
+  }
+
   create(usuario: IUsuario): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(usuario);
     return this.http
